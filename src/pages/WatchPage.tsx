@@ -72,20 +72,23 @@ export function Component() {
 
     player.on("timeupdate", () => {
       setPlayerState((draft) => {
-        return { ...draft, playedSeconds: player.currentTime() };
+        return { ...draft, playedSeconds: player.currentTime() ?? 0 };
       });
     });
 
     player.one("durationchange", () => {
       setPlayerInitialized(true);
-      setPlayerState((draft) => ({ ...draft, duration: player.duration() }));
+      setPlayerState((draft) => ({ ...draft, duration: player.duration() ?? 0 }));
     });
 
     playerRef.current = player;
 
     setPlayerState((draft) => {
-      return { ...draft, paused: player.paused() };
-    });
+  return {
+    ...draft,
+    playedSeconds: player.currentTime() ?? 0,
+  };
+});
   };
 
   const handleVolumeChange: SliderUnstyledOwnProps["onChange"] = (_, value) => {
@@ -183,7 +186,7 @@ export function Component() {
 
               {/* Controller */}
               <Stack direction="row" alignItems="center">
-                {/* left controller */}
+?? 0,                {/* left controller */}
                 <Stack
                   direction="row"
                   spacing={{ xs: 0.5, sm: 1.5, md: 2 }}
@@ -270,3 +273,4 @@ export function Component() {
 }
 
 Component.displayName = "WatchPage";
+
