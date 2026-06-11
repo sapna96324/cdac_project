@@ -41,15 +41,33 @@ pipeline {
 
         stage('OWASP Dependency Check') {
             steps {
-                dependencyCheck odcInstallation: 'OWASP',
-                additionalArguments: '--scan .'
+                dependencyCheck(
+                    odcInstallation: 'OWASP',
+                    additionalArguments: '--scan .'
+                )
             }
         }
 
         stage('Publish OWASP Report') {
             steps {
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                dependencyCheckPublisher(
+                    pattern: '**/dependency-check-report.xml'
+                )
             }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: '**/dependency-check-report.*', allowEmptyArchive: true
+        }
+
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed. Check console output.'
         }
     }
 }
