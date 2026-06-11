@@ -1,7 +1,6 @@
 pipeline {
 agent any
 
-```
 environment {
     SCANNER_HOME = tool 'SonarScanner'
 }
@@ -40,6 +39,5 @@ stages {
         }
     }
 }
-```
 
 }
