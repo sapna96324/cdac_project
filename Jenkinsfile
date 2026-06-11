@@ -30,12 +30,12 @@ stages {
     stage('SonarQube Analysis') {
         steps {
             withSonarQubeEnv('SonarQube') {
-                sh """
-                \$SCANNER_HOME/bin/sonar-scanner \
+                sh '''
+                $SCANNER_HOME/bin/sonar-scanner \
                 -Dsonar.projectKey=Netflix-Clone \
-                -Dsonar.projectName='Netflix Clone' \
+                -Dsonar.projectName="Netflix Clone" \
                 -Dsonar.sources=src
-                """
+                '''
             }
         }
     }
